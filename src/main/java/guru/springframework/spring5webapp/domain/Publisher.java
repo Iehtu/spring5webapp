@@ -1,11 +1,15 @@
 package guru.springframework.spring5webapp.domain;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Publisher {
@@ -15,11 +19,26 @@ public class Publisher {
     private Long id;
     
     private String name;
-    private String address;
+    private String addressLine;
+    private String city;
+    private String state;
+    private String zip;
 
-    public Publisher(String name, String address) {
+    @OneToMany
+    @JoinColumn(name = "publisher_id")
+    private Set<Book> books = new HashSet<>();
+
+
+    public Publisher(){
+        
+    }
+
+    public Publisher(String name, String addressLine, String city, String state, String zip) {
         this.name = name;
-        this.address = address;
+        this.addressLine = addressLine;
+        this.city = city;
+        this.state = state;
+        this.zip = zip;
     }
 
     public Long getId() {
@@ -39,11 +58,11 @@ public class Publisher {
     }
 
     public String getAddress() {
-        return this.address;
+        return this.addressLine;
     }
 
     public void setAddress(String address) {
-        this.address = address;
+        this.addressLine = address;
     }
 
     @Override
@@ -62,14 +81,60 @@ public class Publisher {
         return Objects.hash(id);
     }
 
+
+    public String getAddressLine() {
+        return this.addressLine;
+    }
+
+    public void setAddressLine(String addressLine) {
+        this.addressLine = addressLine;
+    }
+
+    public String getCity() {
+        return this.city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return this.state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getZip() {
+        return this.zip;
+    }
+
+    public void setZip(String zip) {
+        this.zip = zip;
+    }
+
+    public Set<Book> getBooks() {
+        return this.books;
+    }
+
+    public void setBooks(Set<Book> books) {
+        this.books = books;
+    }
+
     @Override
     public String toString() {
-        return "Publisher{" +
+        return "{" +
             " id='" + getId() + "'" +
             ", name='" + getName() + "'" +
-            ", address='" + getAddress() + "'" +
+            ", addressLine='" + getAddressLine() + "'" +
+            ", city='" + getCity() + "'" +
+            ", state='" + getState() + "'" +
+            ", zip='" + getZip() + "'" +
+            ", books='" + getBooks() + "'" +
             "}";
     }
+
 
 
 }
